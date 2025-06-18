@@ -6801,6 +6801,14 @@ def test_offset_label_color():
     assert ax.yaxis.get_offset_text().get_color() == 'red'
 
 
+def test_offset_label_color_rcparams():
+    with mpl.rc_context({'ytick.labelcolor': 'red'}):
+        fig, ax = plt.subplots()
+        ax.plot([1.01e9, 1.02e9, 1.03e9])
+        fig.canvas.draw()
+        assert ax.yaxis.get_offset_text().get_color() == 'red'
+
+
 def test_offset_text_visible():
     fig, ax = plt.subplots()
     ax.plot([1.01e9, 1.02e9, 1.03e9])
