@@ -1220,7 +1220,7 @@ class Axis(martist.Artist):
         if v0 == v1:
             _api.warn_external(
                 f"Attempting to set identical low and high {name}lims "
-                f"makes transformation singular; automatically expanding.")
+                "makes transformation singular; automatically expanding.")
         reverse = bool(v0 > v1)  # explicit cast needed for python3.8+np.bool_.
         v0, v1 = self.get_major_locator().nonsingular(v0, v1)
         v0, v1 = self.limit_range_for_scale(v0, v1)
@@ -2249,13 +2249,16 @@ class XAxis(Axis):
         )
         self.label_position = 'bottom'
 
+        x_offset_color = (mpl.rcParams['xtick.color']
+                          if mpl.rcParams['xtick.labelcolor'] == 'inherit'
+                          else mpl.rcParams['xtick.labelcolor'])
         self.offsetText.set(
             x=1, y=0,
             verticalalignment='top', horizontalalignment='right',
             transform=mtransforms.blended_transform_factory(
                 self.axes.transAxes, mtransforms.IdentityTransform()),
             fontsize=mpl.rcParams['xtick.labelsize'],
-            color=mpl.rcParams['xtick.color'],
+            color=x_offset_color,
         )
         self.offset_text_position = 'bottom'
 
@@ -2509,13 +2512,16 @@ class YAxis(Axis):
         )
         self.label_position = 'left'
         # x in axes coords, y in display coords(!).
+        y_offset_color = (mpl.rcParams['ytick.color']
+                          if mpl.rcParams['ytick.labelcolor'] == 'inherit'
+                          else mpl.rcParams['ytick.labelcolor'])
         self.offsetText.set(
             x=0, y=0.5,
             verticalalignment='baseline', horizontalalignment='left',
             transform=mtransforms.blended_transform_factory(
                 self.axes.transAxes, mtransforms.IdentityTransform()),
             fontsize=mpl.rcParams['ytick.labelsize'],
-            color=mpl.rcParams['ytick.color'],
+            color=y_offset_color,
         )
         self.offset_text_position = 'left'
 
